@@ -144,7 +144,7 @@ endif()
 ###############################################################################
 # Load external dependencies.
 ###############################################################################
-#set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_BINARY_DIR}/temp_install)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${D}/temp_install)
 
 foreach(d ${_deps})
     list(GET d 0 _name)
@@ -507,12 +507,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 # Install dependencies.
-if(EXISTS ${CMAKE_BINARY_DIR}/temp_install/)
-    file(GLOB _deps RELATIVE ${CMAKE_BINARY_DIR}/temp_install ${CMAKE_BINARY_DIR}/temp_install/*)
+if(EXISTS ${D}/temp_install/)
+    file(GLOB _deps RELATIVE ${D}/temp_install ${D}/temp_install/*)
     foreach(_d ${_deps})
         install(
             DIRECTORY
-                ${CMAKE_BINARY_DIR}/temp_install/${_d}$<IF:$<BOOL:${UAGENT_ISOLATED_INSTALL}>,,/>
+            ${D}/temp_install/${_d}$<IF:$<BOOL:${UAGENT_ISOLATED_INSTALL}>,,/>
             DESTINATION
                 ${CMAKE_INSTALL_PREFIX}$<IF:$<BOOL:${UAGENT_ISOLATED_INSTALL}>,/../,>
             COMPONENT
