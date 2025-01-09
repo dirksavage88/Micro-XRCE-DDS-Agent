@@ -27,15 +27,15 @@ option(UAGENT_ISOLATED_INSTALL "Install the project and dependencies into separa
 option(UAGENT_USE_INTERNAL_GTEST "Enable internal GTest libraries." OFF)
 option(BUILD_SHARED_LIBS "Control shared/static building." ON)
 
-option(UAGENT_USE_SYSTEM_FASTDDS "Force find and use system installed Fast-DDS." OFF)
-option(UAGENT_USE_SYSTEM_FASTCDR "Force find and use system installed Fast-CDR." OFF)
+option(UAGENT_USE_SYSTEM_FASTDDS "Force find and use system installed Fast-DDS." ON)
+option(UAGENT_USE_SYSTEM_FASTCDR "Force find and use system installed Fast-CDR." ON)
 option(UAGENT_USE_SYSTEM_LOGGER "Force find and use system installed spdlog." OFF)
 option(UAGENT_FAST_PROFILE "Build FastMiddleware profile." ON)
 option(UAGENT_CED_PROFILE "Build CedMiddleware profile." ON)
 option(UAGENT_DISCOVERY_PROFILE "Build Discovery profile." ON)
-option(UAGENT_P2P_PROFILE "Build P2P discovery profile." ON)
+option(UAGENT_P2P_PROFILE "Build P2P discovery profile." OFF)
 option(UAGENT_SOCKETCAN_PROFILE "Build Agent CAN FD transport." ON)
-option(UAGENT_LOGGER_PROFILE "Build logger profile." ON)
+option(UAGENT_LOGGER_PROFILE "Build logger profile." OFF)
 option(UAGENT_SECURITY_PROFILE "Build security profile." OFF)
 option(UAGENT_BUILD_EXECUTABLE "Build Micro XRCE-DDS Agent provided executable." ON)
 option(UAGENT_BUILD_USAGE_EXAMPLES "Build Micro XRCE-DDS Agent built-in usage examples" OFF)
@@ -115,7 +115,7 @@ endif()
 ###############################################################################
 # Project
 ###############################################################################
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${D}/cmake/modules)
 if(NOT UAGENT_SUPERBUILD)
     project(microxrcedds_agent VERSION "2.2.1" LANGUAGES C CXX)
 else()
@@ -146,12 +146,11 @@ endif()
 ###############################################################################
 #set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_BINARY_DIR}/temp_install)
 
-#foreach(d ${_deps})
-#    list(GET d 0 _name)
-#    list(GET d 1 _version)
-#    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_BINARY_DIR}/temp_install/${_name}-${_version})
-#    find_package(${_name} ${_version} REQUIRED)
-#endforeach()
+foreach(d ${_deps})
+    list(GET d 0 _name)
+    list(GET d 1 _version)
+    find_package(${_name} ${_version} REQUIRED)
+endforeach()
 
 ###############################################################################
 # Sources
